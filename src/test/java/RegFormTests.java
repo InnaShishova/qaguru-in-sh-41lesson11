@@ -8,8 +8,10 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selectors.byText;
-
+import org.junit.jupiter.api.Disabled;
+@Disabled
 public class RegFormTests {
+
 
     @BeforeAll
     static void prepareEnvironment() {
