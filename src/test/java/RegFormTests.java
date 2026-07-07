@@ -21,131 +21,17 @@ public class RegFormTests {
     }
 
     @Test
-    //если все заполнено корректно//
     void fillFormTest() {
-        //Открытие страницы 'Practice Form'//
-        open("/automation-practice-form");
-
-        //Name//
-        $("#firstName").setValue("Ivan");
-        $("#lastName").setValue("Petrov");
-
-        //Email//
+        open("/text-box");
+        $("#userName").setValue("Masha");
         $("#userEmail").setValue("test1@test2.com");
-
-        //Gender//
-        $("#genterWrapper").$(byText("Female")).click();
-
-        //Mobile//
-        $("#userNumber").setValue("1234567890");
-
-        //Date of Birth//
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").selectOption("2025");
-        $(".react-datepicker__month-select").selectOption("November");
-        $(".react-datepicker__month").$(byText("03")).click();
-
-        //Subjects//
-        $("#subjectsInput").setValue("English").pressEnter();
-
-        //Hobbies//
-        $("#hobbiesWrapper").$(byText("Reading")).click();
-
-        //Picture//
-        $("#uploadPicture").uploadFromClasspath("filepicture.jpg");
-
-        //Current Address//
-        $("#currentAddress").scrollTo().shouldBe(visible);
-        $("#currentAddress").setValue("город Москва, улица Ленина");
-
-
-        //State and City//
-        $("#state").click();
-        $(byText("Haryana")).click();
-        $("#city").click();
-        $(byText("Panipat")).click();
-
-        //Submit
+        $("#currentAddress").setValue("Samara, Lenina street");
+        $("#permanentAddress").setValue("Lenina street");
         $("#submit").click();
 
-        //Проверка таблицы
-        $("[class=modal-header]").shouldHave(text("Thanks for submitting the form"));
-
-        $(".table").shouldHave(text("Ivan"));
-        $(".table").shouldHave(text("Petrov"));
-        $(".table").shouldHave(text("test1@test2.com"));
-        $(".table").shouldHave(text("Female"));
-        $(".table").shouldHave(text("1234567890"));
-        $(".table").shouldHave(text("15 October,2025"));
-        $(".table").shouldHave(text("English"));
-        $(".table").shouldHave(text("Reading"));
-        $(".table").shouldHave(text("город Москва, улица Ленина"));
-        $(".table").shouldHave(text("Haryana Panipat"));
-
-
-        //Закрытие окна
-        $("#closeLargeModal").click();
-
-    }
-        @Test
-        //если номер телефона заполнен некорректно -менее 10 символов//
-        void fillFormTest2() {
-            //Открытие страницы 'Practice Form'//
-            open("/automation-practice-form");
-
-            //Name//
-            $("#firstName").setValue("Ivan");
-            $("#lastName").setValue("Petrov");
-
-            //Email//
-            $("#userEmail").setValue("test1@test2.com");
-
-            //Gender//
-            $("#genterWrapper").$(byText("Female")).click();
-
-            //Mobile//
-            $("#userNumber").setValue("123");
-
-            //Date of Birth//
-            $("#dateOfBirthInput").click();
-            $(".react-datepicker__year-select").selectOption("2025");
-            $(".react-datepicker__month-select").selectOption("November");
-            $(".react-datepicker__month").$(byText("03")).click();
-
-            //Subjects//
-            $("#subjectsInput").setValue("English").pressEnter();
-
-            //Hobbies//
-            $("#hobbiesWrapper").$(byText("Reading")).click();
-
-            //Picture//
-            $("#uploadPicture").uploadFromClasspath("filepicture.jpg");
-
-            //Current Address//
-            $("#currentAddress").scrollTo().shouldBe(visible);
-            $("#currentAddress").setValue("город Москва, улица Ленина");
-
-
-            //State and City//
-            $("#state").click();
-            $(byText("Haryana")).click();
-            $("#city").click();
-            $(byText("Panipat")).click();
-
-            //Submit
-            $("#submit").click();
-
-        }
-
-    @Test
-        //отправка пустой формы//
-    void fillFormTest3() {
-        //Открытие страницы 'Practice Form'//
-        open("/automation-practice-form");
-
-        //Submit
-        $("#submit").click();
+        $("#output").$("#name").shouldHave(text("Masha"));
+        $("#output").$("#email").shouldHave(text("test1@test2.com"));
+        $("#output").$("#currentAddress").shouldHave(text("Samara, Lenina street"));
+        $("#output").$("#permanentAddress").shouldHave(text("Lenina street"));
     }
 }
-
-

@@ -10,16 +10,17 @@ public class RegistrationTests extends TestBase{
     void fillFormTest() {
 
         textBoxPage.openPage()
-                .deleteAds()
-                .setName("Masha")
-                .setUserEmail("test1@test2.com")
+                .removeBanners()
+                .setFullName("Masha")
+                .setEmail("test1@test2.com")
                 .setCurrentAddress("Samara, Lenina street")
                 .setPermanentAddress("Lenina street")
                 .submit()
-                .checkNameField("Masha")
-                .checkEmailField("test1@test2.com")
-                .checkCurrentAddressField("Samara, Lenina street")
-                .checkPermanentAddressField("Lenina street");
+                .checkResult(
+                        "Masha",
+                        "test1@test2.com",
+                        "Samara, Lenina street",
+                        "Lenina street");
     }
 }
 
