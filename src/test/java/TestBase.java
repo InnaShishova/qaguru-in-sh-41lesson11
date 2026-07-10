@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import utils.Attach;
+
 import java.util.Map;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
@@ -13,23 +14,66 @@ public class TestBase {
 
     @BeforeAll
     static void beforeAll() {
-        Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browser = "chrome";
-        Configuration.browserSize = "1920x1080";
-        Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
+        String baseUrl = System.getProperty(
+                "baseUrl",
+                "https://demoqa.com"
+        );
+
+        String remoteUrl = System.getProperty(
+                "remoteUrl",
+                ""
+        );
+
+        String browser = System.getProperty(
+                "browser",
+                "chrome"
+        );
+
+        String browserVersion = System.getProperty(
+                "browserVersion",
+                ""
+        );
+
+        String browserSize = System.getProperty(
+                "browserSize",
+                "1920x1080"
+        );
+
+        boolean headless = Boolean.parseBoolean(
+                System.getProperty("headless", "false")
+        );
+
+        Configuration.baseUrl = baseUrl;
+        Configuration.browser = browser;
+        Configuration.browserSize = browserSize;
+        Configuration.headless = headless;
+
+        if (!browserVersion.isBlank()) {
+            Configuration.browserVersion = browserVersion;
+        }
+
+        if (!remoteUrl.isBlank()) {
+            Configuration.remote = remoteUrl;
+        }
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
-        capabilities.setCapability("selenoid:options", Map.of(
-                "enableVNC", true,
-                "enableVideo", true
-        ));
+        capabilities.setCapability(
+                "selenoid:options",
+                Map.of(
+                        "enableVNC", true,
+                        "enableVideo", true
+                )
+        );
 
         Configuration.browserCapabilities = capabilities;
 
-        addListener("AllureSelenide", new AllureSelenide()
-                .screenshots(true)
-                .savePageSource(true));
+        addListener(
+                "AllureSelenide",
+                new AllureSelenide()
+                        .screenshots(true)
+                        .savePageSource(true)
+        );
     }
 
     @AfterEach
